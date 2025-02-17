@@ -1,6 +1,9 @@
 use quote::{quote, ToTokens};
-use syn::{spanned::Spanned, Attribute, Expr, Lit, LitBool, LitStr, Meta, MetaNameValue, Type};
+use syn::{parse_macro_input, parse_quote, spanned::Spanned, Attribute, Expr, Lit, LitBool, LitStr, Meta, MetaNameValue, Token, Type, WherePredicate};
+use syn::parse::{ParseStream, Parser};
+use syn::punctuated::Punctuated;
 use crate::common::ident_bool::meta_name_value_2_bool;
+use crate::common::where_predicates_bool::WherePredicates;
 use super::path::path_to_string;
 
 const INT_TYPES: [&str; 12] =
@@ -20,19 +23,24 @@ pub(crate) fn meta_2_expr(meta: &Meta) -> syn::Result<Expr> {
     }
 }
 
-#[inline]
-pub(crate) fn parse_attrs_from_str(str: &str) -> syn::Result<Vec<Attribute>> {
-    let attr = str.parse::<proc_macro2::TokenStream>()?;
-    syn::parse2(quote! {#attr}).map(|item: syn::ItemFn| item.attrs)
-}
 
 
 #[inline]
 pub(crate) fn meta_name_value_2_attrs(name_value: &MetaNameValue) -> syn::Result<Vec<Attribute>> {
     if let Expr::Lit(lit) = &name_value.value {
         if let Lit::Str(b) = &lit.lit {
-            let attrs = parse_attrs_from_str(&b.value())?;
-            return Ok(attrs);
+            return b.parse_with(|input: ParseStream<'_>| {
+                let mut attrs = vec![];
+
+                while !input.is_empty() {
+                    attrs.extend(input.call(Attribute::parse_outer)?);
+                    if !input.is_empty() {
+                        let _: Token![,] = input.parse()?;
+                    }
+                }
+
+                Ok(attrs)
+            });
         }
     }
 
@@ -46,7 +54,20 @@ pub(crate) fn meta_name_value_2_attrs(name_value: &MetaNameValue) -> syn::Result
 pub(crate) fn meta_2_attrs(meta: &Meta) -> syn::Result<Vec<Attribute>> {
     match &meta {
         Meta::NameValue(name_value) => meta_name_value_2_attrs(name_value),
-        Meta::List(list) => Ok(parse_attrs_from_str(&list.parse_args::<LitStr>()?.value())?),
+        Meta::List(list) => {
+            list.parse_args_with(|input: ParseStream<'_>| {
+                let mut attrs = vec![];
+
+                while !input.is_empty() {
+                    attrs.extend(input.call(Attribute::parse_outer)?);
+                    if !input.is_empty() {
+                        let _: Token![,] = input.parse()?;
+                    }
+                }
+
+                Ok(attrs)
+            })
+        }
         Meta::Path(path) => Err(syn::Error::new(
             path.span(),
             format!("expected `{path} = false` or `{path}(false)`", path = path_to_string(path)),
