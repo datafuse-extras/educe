@@ -4,10 +4,12 @@ use crate::{
     common::{bound::Bound, unsafe_punctuated_meta::UnsafePunctuatedMeta},
     panic, Trait,
 };
+use crate::common::expr::meta_2_attrs;
 
 pub(crate) struct TypeAttribute {
     pub(crate) has_unsafe: bool,
     pub(crate) bound:      Bound,
+    pub(crate) attrs:      Vec<Attribute>,
 }
 
 #[derive(Debug)]
@@ -23,6 +25,7 @@ impl TypeAttributeBuilder {
 
         let mut has_unsafe = false;
         let mut bound = Bound::Auto;
+        let mut attrs = vec![];
 
         let correct_usage_for_hash_attribute = {
             let mut usage = vec![];
@@ -85,6 +88,8 @@ impl TypeAttributeBuilder {
                             bound = v;
 
                             return Ok(true);
+                        } else if ident == "attrs" {
+                            attrs = meta_2_attrs(&meta)?;
                         }
                     }
 
@@ -105,6 +110,7 @@ impl TypeAttributeBuilder {
         Ok(TypeAttribute {
             has_unsafe,
             bound,
+            attrs,
         })
     }
 
@@ -148,7 +154,7 @@ impl TypeAttributeBuilder {
         }
 
         Ok(output.unwrap_or(TypeAttribute {
-            has_unsafe: false, bound: Bound::Auto
+            has_unsafe: false, bound: Bound::Auto, attrs:vec![]
         }))
     }
 }

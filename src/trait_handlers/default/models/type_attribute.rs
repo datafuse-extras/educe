@@ -9,6 +9,7 @@ use crate::{
     },
     panic, Trait,
 };
+use crate::common::expr::meta_2_attrs;
 
 pub(crate) struct TypeAttribute {
     pub(crate) flag:       bool,
@@ -16,6 +17,7 @@ pub(crate) struct TypeAttribute {
     pub(crate) expression: Option<Expr>,
     pub(crate) bound:      Bound,
     pub(crate) span:       Span,
+    pub(crate) attrs:      Vec<Attribute>,
 }
 
 #[derive(Debug)]
@@ -34,6 +36,7 @@ impl TypeAttributeBuilder {
         let mut new = false;
         let mut expression = None;
         let mut bound = Bound::Auto;
+        let mut attrs = vec![];
 
         let correct_usage_for_default_attribute = {
             let mut usage = vec![];
@@ -137,6 +140,9 @@ impl TypeAttributeBuilder {
 
                                 return Ok(true);
                             },
+                            "attrs" => {
+                                attrs = meta_2_attrs(&meta)?;
+                            }
                             _ => (),
                         }
                     }
@@ -160,6 +166,7 @@ impl TypeAttributeBuilder {
             new,
             expression,
             bound,
+            attrs,
             span: meta.span(),
         })
     }
@@ -209,6 +216,7 @@ impl TypeAttributeBuilder {
             expression: None,
             bound:      Bound::Auto,
             span:       Span::call_site(),
+            attrs:      vec![],
         }))
     }
 }

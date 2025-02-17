@@ -246,11 +246,13 @@ impl TraitHandler for CloneEnumHandler {
             where_clause.predicates.push(where_predicate);
         }
 
+        let method_attrs = type_attribute.attrs;
         let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
 
         token_stream.extend(quote! {
             impl #impl_generics ::core::clone::Clone for #ident #ty_generics #where_clause {
                 #[inline]
+                #(#method_attrs)*
                 fn clone(&self) -> Self {
                     #clone_token_stream
                 }

@@ -1,14 +1,16 @@
 use syn::{punctuated::Punctuated, Attribute, Meta, Token};
 
 use crate::{common::bound::Bound, panic, Trait};
+use crate::common::expr::meta_2_attrs;
 
 pub(crate) struct TypeAttribute {
     pub(crate) bound: Bound,
+    pub(crate) attrs: Vec<Attribute>,
 }
 
 #[derive(Debug)]
 pub(crate) struct TypeAttributeBuilder {
-    pub(crate) enable_flag:  bool,
+    pub(crate) enable_flag: bool,
     pub(crate) enable_bound: bool,
 }
 
@@ -17,6 +19,7 @@ impl TypeAttributeBuilder {
         debug_assert!(meta.path().is_ident("Clone"));
 
         let mut bound = Bound::Auto;
+        let mut attrs = vec![];
 
         let correct_usage_for_clone_attribute = {
             let mut usage = vec![];
@@ -41,13 +44,13 @@ impl TypeAttributeBuilder {
                         &correct_usage_for_clone_attribute,
                     ));
                 }
-            },
+            }
             Meta::NameValue(_) => {
                 return Err(panic::attribute_incorrect_format(
                     meta.path().get_ident().unwrap(),
                     &correct_usage_for_clone_attribute,
                 ));
-            },
+            }
             Meta::List(list) => {
                 let result =
                     list.parse_args_with(Punctuated::<Meta, Token![,]>::parse_terminated)?;
@@ -72,6 +75,8 @@ impl TypeAttributeBuilder {
                             bound = v;
 
                             return Ok(true);
+                        } else if ident == "attrs" {
+                            attrs = meta_2_attrs(&meta)?;
                         }
                     }
 
@@ -86,11 +91,12 @@ impl TypeAttributeBuilder {
                         ));
                     }
                 }
-            },
+            }
         }
 
         Ok(TypeAttribute {
             bound,
+            attrs,
         })
     }
 
@@ -134,7 +140,8 @@ impl TypeAttributeBuilder {
         }
 
         Ok(output.unwrap_or(TypeAttribute {
-            bound: Bound::Auto
+            bound: Bound::Auto,
+            attrs: vec![],
         }))
     }
 }
