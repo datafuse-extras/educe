@@ -90,6 +90,7 @@ impl TypeAttributeBuilder {
                             return Ok(true);
                         } else if ident == "attrs" {
                             attrs = meta_2_attrs(&meta)?;
+                            return Ok(true);
                         }
                     }
 

@@ -77,11 +77,13 @@ impl TraitHandler for PartialEqStructHandler {
             where_clause.predicates.push(where_predicate);
         }
 
+        let method_attrs = type_attribute.attrs;
         let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
 
         token_stream.extend(quote! {
             impl #impl_generics ::core::cmp::PartialEq for #ident #ty_generics #where_clause {
                 #[inline]
+                #(#method_attrs)*
                 fn eq(&self, other: &Self) -> bool {
                     #eq_token_stream
 

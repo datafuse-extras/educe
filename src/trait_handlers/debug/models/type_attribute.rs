@@ -194,6 +194,7 @@ impl TypeAttributeBuilder {
                             },
                             "attrs" => {
                                 attrs = meta_2_attrs(&meta)?;
+                                return Ok(true);
                             }
                             _ => (),
                         }
