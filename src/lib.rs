@@ -27,7 +27,7 @@ Use `#[derive(Educe)]` and `#[educe(Debug)]` to implement the `Debug` trait for 
 ```rust
 # #[cfg(feature = "Debug")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Debug)]
@@ -54,7 +54,7 @@ The `name` parameter can rename a type, a variant or a field. If you set it to `
 ```rust
 # #[cfg(feature = "Debug")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Debug(name(Struct2)))]
@@ -86,7 +86,7 @@ The `ignore` parameter can ignore a specific field.
 ```rust
 # #[cfg(feature = "Debug")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Debug)]
@@ -118,7 +118,7 @@ With the `named_field` parameter, structs can be formatted as tuples and tuples 
 ```rust
 # #[cfg(feature = "Debug")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Debug(named_field = false))]
@@ -151,7 +151,7 @@ The `method` parameter can be utilized to replace the implementation of the `Deb
 ```rust
 # #[cfg(feature = "Debug")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 use std::fmt::{self, Formatter};
 
@@ -184,7 +184,7 @@ Generic parameters will be automatically bound to the `Debug` trait if necessary
 ```rust
 # #[cfg(feature = "Debug")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Debug)]
@@ -205,7 +205,7 @@ Or you can set the where predicates by yourself.
 ```rust
 # #[cfg(feature = "Debug")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 use std::fmt::{self, Formatter};
 
@@ -235,7 +235,7 @@ Or, you can have `educe` replicate the behaviour of `std`'s `derive`'s, where a 
 ```rust
 # #[cfg(feature = "Debug")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Debug(bound(*)))]
@@ -257,7 +257,7 @@ A union will be formatted as a `u8` slice because we don't know its fields at ru
 ```rust
 # #[cfg(feature = "Debug")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Debug(unsafe))]
@@ -277,7 +277,7 @@ Use `#[derive(Educe)]` and `#[educe(Clone)]` to implement the `Clone` trait for 
 ```rust
 # #[cfg(feature = "Clone")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Clone)]
@@ -304,7 +304,7 @@ The `method` parameter can be utilized to replace the implementation of the `Clo
 ```rust
 # #[cfg(feature = "Clone")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 fn clone(v: &u8) -> u8 {
     v + 100
@@ -341,7 +341,7 @@ Generic parameters will be automatically bound to the `Clone` trait if necessary
 ```rust
 # #[cfg(feature = "Clone")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Clone)]
@@ -362,7 +362,7 @@ Or you can set the where predicates by yourself.
 ```rust
 # #[cfg(feature = "Clone")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 trait A {
     fn add(&self, rhs: u8) -> Self;
@@ -394,7 +394,7 @@ Or, you can have `educe` replicate the behaviour of `std`'s `derive`'s by using 
 ```rust
 # #[cfg(feature = "Clone")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 trait A {
     fn add(&self, rhs: u8) -> Self;
@@ -426,7 +426,7 @@ Use `#[derive(Educe)]` and `#[educe(Copy)]` to implement the `Copy` trait for a 
 ```rust
 # #[cfg(all(feature = "Clone", feature = "Copy"))]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Copy, Clone)]
@@ -453,7 +453,7 @@ All generic parameters will be automatically bound to the `Copy` trait.
 ```rust
 # #[cfg(all(feature = "Clone", feature = "Copy"))]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Copy, Clone)]
@@ -474,7 +474,7 @@ Or you can set the where predicates by yourself.
 ```rust
 # #[cfg(all(feature = "Clone", feature = "Copy"))]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 trait A {
     fn add(&self, rhs: u8) -> Self;
@@ -508,7 +508,7 @@ The `#[educe(Copy, Clone)]` attribute can be used for a union. The fields of a u
 ```rust
 # #[cfg(all(feature = "Clone", feature = "Copy"))]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Copy, Clone)]
@@ -527,7 +527,7 @@ Use `#[derive(Educe)]` and `#[educe(PartialEq)]` to implement the `PartialEq` tr
 ```rust
 # #[cfg(feature = "PartialEq")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq)]
@@ -554,7 +554,7 @@ The `ignore` parameter can ignore a specific field.
 ```rust
 # #[cfg(feature = "PartialEq")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq)]
@@ -586,7 +586,7 @@ The `method` parameter can be utilized to replace the implementation of the `Par
 ```rust
 # #[cfg(feature = "PartialEq")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 fn eq(a: &u8, b: &u8) -> bool {
     a + 1 == *b
@@ -623,7 +623,7 @@ Generic parameters will be automatically bound to the `PartialEq` trait if neces
 ```rust
 # #[cfg(feature = "PartialEq")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq)]
@@ -644,7 +644,7 @@ Or you can set the where predicates by yourself.
 ```rust
 # #[cfg(feature = "PartialEq")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 trait A {
     fn is_same(&self, other: &Self) -> bool;
@@ -676,7 +676,7 @@ You can have `educe` replicate the behaviour of `std`'s `derive`'s by using `bou
 ```rust
 # #[cfg(feature = "PartialEq")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq(bound(*)))]
@@ -694,7 +694,7 @@ The `#[educe(PartialEq(unsafe))]` attribute can be used for a union. The fields 
 ```rust
 # #[cfg(feature = "PartialEq")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq(unsafe))]
@@ -714,7 +714,7 @@ Use `#[derive(Educe)]` and `#[educe(Eq)]` to implement the `Eq` trait for a stru
 ```rust
 # #[cfg(all(feature = "PartialEq", feature = "Eq"))]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq, Eq)]
@@ -741,7 +741,7 @@ The `ignore` parameter can ignore a specific field.
 ```rust
 # #[cfg(all(feature = "PartialEq", feature = "Eq"))]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq, Eq)]
@@ -773,7 +773,7 @@ The `method` parameter can be utilized to replace the implementation of the `Eq`
 ```rust
 # #[cfg(all(feature = "PartialEq", feature = "Eq"))]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 fn eq(a: &u8, b: &u8) -> bool {
     a + 1 == *b
@@ -810,7 +810,7 @@ Generic parameters will be automatically bound to the `PartialEq` trait if neces
 ```rust
 # #[cfg(all(feature = "PartialEq", feature = "Eq"))]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq, Eq)]
@@ -831,7 +831,7 @@ Or you can set the where predicates by yourself.
 ```rust
 # #[cfg(all(feature = "PartialEq", feature = "Eq"))]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 trait A {
     fn is_same(&self, other: &Self) -> bool;
@@ -863,7 +863,7 @@ The `#[educe(PartialEq(unsafe), Eq)]` attribute can be used for a union. The fie
 ```rust
 # #[cfg(all(feature = "PartialEq", feature = "Eq"))]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq(unsafe), Eq)]
@@ -883,7 +883,7 @@ Use `#[derive(Educe)]` and `#[educe(PartialOrd)]` to implement the `PartialOrd` 
 ```rust
 # #[cfg(feature = "PartialOrd")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Educe)]
 #[educe(PartialOrd)]
@@ -910,7 +910,7 @@ The `ignore` parameter can ignore a specific field.
 ```rust
 # #[cfg(feature = "PartialOrd")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Educe)]
 #[educe(PartialOrd)]
@@ -942,7 +942,7 @@ The `method` parameter can be utilized to replace the implementation of the `Par
 ```rust
 # #[cfg(all(feature = "PartialEq", feature = "PartialOrd"))]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 use std::cmp::Ordering;
 
@@ -987,7 +987,7 @@ Each field can add a `#[educe(PartialOrd(rank = priority_value))]` attribute, wh
 ```rust
 # #[cfg(feature = "PartialOrd")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Educe)]
 #[educe(PartialOrd)]
@@ -1005,7 +1005,7 @@ For variants, the discriminant can be explicitly set for comparison.
 ```rust,ignore
 # #[cfg(feature = "PartialOrd")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Educe)]
 #[educe(PartialOrd)]
@@ -1025,7 +1025,7 @@ Generic parameters will be automatically bound to the `PartialOrd` trait if nece
 ```rust
 # #[cfg(feature = "PartialOrd")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Educe)]
 #[educe(PartialOrd)]
@@ -1046,7 +1046,7 @@ Or you can set the where predicates by yourself.
 ```rust
 # #[cfg(feature = "PartialOrd")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 use std::cmp::Ordering;
 
@@ -1080,7 +1080,7 @@ You can have `educe` replicate the behaviour of `std`'s `derive`'s by using `bou
 ```rust
 # #[cfg(feature = "PartialOrd")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Educe)]
 #[educe(PartialOrd(bound(*)))]
@@ -1098,7 +1098,7 @@ The `#[educe(PartialEq(unsafe))]` attribute can be used for a union. The fields 
 ```rust
 # #[cfg(feature = "PartialEq")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq(unsafe))]
@@ -1118,7 +1118,7 @@ Use `#[derive(Educe)]` and `#[educe(Ord)]` to implement the `Ord` trait for a st
 ```rust
 # #[cfg(all(feature = "PartialOrd", feature = "Ord"))]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Eq, Educe)]
 #[educe(PartialOrd, Ord)]
@@ -1145,7 +1145,7 @@ The `ignore` parameter can ignore a specific field.
 ```rust
 # #[cfg(all(feature = "PartialOrd", feature = "Ord"))]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Eq, Educe)]
 #[educe(PartialOrd, Ord)]
@@ -1177,7 +1177,7 @@ The `method` parameter can be utilized to replace the implementation of the `Ord
 ```rust
 # #[cfg(all(feature = "PartialEq", feature = "Eq", feature = "PartialOrd", feature = "Ord"))]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 use std::cmp::Ordering;
 
@@ -1222,7 +1222,7 @@ Each field can add a `#[educe(Ord(rank = priority_value))]` attribute, where `pr
 ```rust
 # #[cfg(all(feature = "PartialOrd", feature = "Ord"))]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Eq, Educe)]
 #[educe(PartialOrd, Ord)]
@@ -1240,7 +1240,7 @@ For variants, the discriminant can be explicitly set for comparison.
 ```rust,ignore
 # #[cfg(all(feature = "PartialOrd", feature = "Ord"))]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Eq, Educe)]
 #[educe(PartialOrd, Ord)]
@@ -1260,7 +1260,7 @@ Generic parameters will be automatically bound to the `Ord` trait if necessary.
 ```rust
 # #[cfg(all(feature = "PartialOrd", feature = "Ord"))]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Eq, Educe)]
 #[educe(PartialOrd, Ord)]
@@ -1281,7 +1281,7 @@ Or you can set the where predicates by yourself.
 ```rust
 # #[cfg(all(feature = "PartialOrd", feature = "Ord"))]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 use std::cmp::Ordering;
 
@@ -1317,7 +1317,7 @@ Use `#[derive(Educe)]` and `#[educe(Hash)]` to implement the `Hash` trait for a 
 ```rust
 # #[cfg(feature = "Hash")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Hash)]
@@ -1344,7 +1344,7 @@ The `ignore` parameter can ignore a specific field.
 ```rust
 # #[cfg(feature = "Hash")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Hash)]
@@ -1376,7 +1376,7 @@ The `method` parameter can be utilized to replace the implementation of the `Has
 ```rust
 # #[cfg(feature = "Hash")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 use std::hash::{Hash, Hasher};
 
@@ -1411,7 +1411,7 @@ Generic parameters will be automatically bound to the `Hash` trait if necessary.
 ```rust
 # #[cfg(feature = "Hash")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Hash)]
@@ -1432,7 +1432,7 @@ Or you can set the where predicates by yourself.
 ```rust
 # #[cfg(feature = "Hash")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 use std::hash::{Hash, Hasher};
 
@@ -1466,7 +1466,7 @@ You can have `educe` replicate the behaviour of `std`'s `derive`'s by using `bou
 ```rust
 # #[cfg(feature = "Hash")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Hash(bound(*)))]
@@ -1484,7 +1484,7 @@ The `#[educe(PartialEq(unsafe), Eq, Hash(unsafe))]` attribute can be used for a 
 ```rust
 # #[cfg(all(feature = "PartialEq", feature = "Eq", feature = "Hash"))]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq(unsafe), Eq, Hash(unsafe))]
@@ -1506,7 +1506,7 @@ For enums and unions, it is necessary to designate a default variant (for enums)
 ```rust
 # #[cfg(feature = "Default")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Default)]
@@ -1540,7 +1540,7 @@ union Union {
 ```rust
 # #[cfg(feature = "Default")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Default(expression = Struct { f1: 1 }))]
@@ -1574,7 +1574,7 @@ You may need to activate the `full` feature to enable support for advanced expre
 ```rust
 # #[cfg(feature = "Default")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Default)]
@@ -1639,7 +1639,7 @@ Generic parameters will be automatically bound to the `Default` trait if necessa
 ```rust
 # #[cfg(feature = "Default")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Default)]
@@ -1659,7 +1659,7 @@ Or you can set the where predicates by yourself.
 ```rust
 # #[cfg(feature = "Default")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Default(bound(T: std::default::Default)))]
@@ -1681,7 +1681,7 @@ With the `#[educe(Default(new))]` attribute, your type will include an additiona
 ```rust
 # #[cfg(feature = "Default")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Default(new))]
@@ -1702,7 +1702,7 @@ You must designate a field as the default for obtaining an immutable reference u
 ```rust
 # #[cfg(feature = "Deref")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Deref)]
@@ -1744,7 +1744,7 @@ You must designate a field as the default for obtaining an mutable reference unl
 ```rust
 # #[cfg(all(feature = "Deref", feature = "DerefMut"))]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Deref, DerefMut)]
@@ -1789,7 +1789,7 @@ You need to designate a field as the default for `Into<type>` conversion unless 
 ```rust
 # #[cfg(feature = "Into")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Into(u8), Into(u16))]
@@ -1820,7 +1820,7 @@ The `method` parameter can be utilized to replace the implementation of the `Int
 ```rust
 # #[cfg(feature = "Into")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 fn into(v: u16) -> u8 {
     v as u8
@@ -1847,7 +1847,7 @@ Generic parameters will be automatically bound to the `Into<type>` trait if nece
 ```rust
 # #[cfg(feature = "Into")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Into(u8))]
@@ -1867,7 +1867,7 @@ Or you can set the where predicates by yourself.
 ```rust
 # #[cfg(feature = "Into")]
 # {
-use educe::Educe;
+use databend_educe::Educe;
 
 fn into<T>(_v: T) -> u8 {
     0

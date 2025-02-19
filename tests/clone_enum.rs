@@ -1,7 +1,7 @@
 #![cfg(feature = "Clone")]
 #![no_std]
 
-use educe::Educe;
+use databend_educe::Educe;
 
 #[test]
 fn empty() {

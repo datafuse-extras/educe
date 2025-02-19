@@ -5,7 +5,7 @@ use std::{
     hash::{Hash, Hasher},
 };
 
-use educe::Educe;
+use databend_educe::Educe;
 
 #[test]
 fn basic_1() {

@@ -2,7 +2,7 @@
 #![no_std]
 #![allow(clippy::clone_on_copy)]
 
-use educe::Educe;
+use databend_educe::Educe;
 
 #[test]
 fn basic() {

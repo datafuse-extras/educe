@@ -2,7 +2,7 @@
 
 use std::collections::HashSet;
 
-use educe::Educe;
+use databend_educe::Educe;
 
 #[allow(dead_code)]
 #[test]
@@ -15,17 +15,11 @@ fn basic() {
 
     let mut set = HashSet::new();
 
-    set.insert(Union {
-        f1: 0
-    });
+    set.insert(Union { f1: 0 });
 
-    assert!(set.contains(&Union {
-        f1: 0
-    }));
+    assert!(set.contains(&Union { f1: 0 }));
 
-    assert!(!set.contains(&Union {
-        f1: 1
-    }));
+    assert!(!set.contains(&Union { f1: 1 }));
 }
 
 #[allow(dead_code)]
@@ -39,15 +33,9 @@ fn bound() {
 
     let mut set = HashSet::new();
 
-    set.insert(Union {
-        f1: 0
-    });
+    set.insert(Union { f1: 0 });
 
-    assert!(set.contains(&Union {
-        f1: 0
-    }));
+    assert!(set.contains(&Union { f1: 0 }));
 
-    assert!(!set.contains(&Union {
-        f1: 1
-    }));
+    assert!(!set.contains(&Union { f1: 1 }));
 }

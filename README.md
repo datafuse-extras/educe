@@ -27,7 +27,7 @@ Use `#[derive(Educe)]` and `#[educe(Debug)]` to implement the `Debug` trait for 
 ###### Basic Usage
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Debug)]
@@ -51,7 +51,7 @@ enum Enum {
 The `name` parameter can rename a type, a variant or a field. If you set it to `false`, the name can be ignored or forced to show otherwise.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Debug(name(Struct2)))]
@@ -80,7 +80,7 @@ enum Enum {
 The `ignore` parameter can ignore a specific field.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Debug)]
@@ -109,7 +109,7 @@ enum Enum {
 With the `named_field` parameter, structs can be formatted as tuples and tuples can be formatted as structs.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Debug(named_field = false))]
@@ -139,7 +139,7 @@ enum Enum {
 The `method` parameter can be utilized to replace the implementation of the `Debug` trait for a field, eliminating the need to implement the `Debug` trait for the type of that field.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 use std::fmt::{self, Formatter};
 
@@ -169,7 +169,7 @@ enum Enum<T> {
 Generic parameters will be automatically bound to the `Debug` trait if necessary.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Debug)]
@@ -187,7 +187,7 @@ enum Enum<T, K> {
 Or you can set the where predicates by yourself.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 use std::fmt::{self, Formatter};
 
@@ -214,7 +214,7 @@ In the above case, `T` is bound to the `Debug` trait, but `K` is not.
 Or, you can have `educe` replicate the behaviour of `std`'s `derive`'s, where a bound is produced for *every* generic parameter, without regard to how it's used in the structure:
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Debug(bound(*)))]
@@ -233,7 +233,7 @@ This was the behaviour of `Trait(bound)` in educe 0.4.x and earlier.
 A union will be formatted as a `u8` slice because we don't know its fields at runtime. The fields of a union cannot be ignored, renamed, or formatted with other methods. The implementation is **unsafe** because it may expose uninitialized memory.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Debug(unsafe))]
@@ -250,7 +250,7 @@ Use `#[derive(Educe)]` and `#[educe(Clone)]` to implement the `Clone` trait for 
 ###### Basic Usage
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Clone)]
@@ -274,7 +274,7 @@ enum Enum {
 The `method` parameter can be utilized to replace the implementation of the `Clone` trait for a field, eliminating the need to implement the `Clone` trait for the type of that field.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 fn clone(v: &u8) -> u8 {
     v + 100
@@ -308,7 +308,7 @@ enum Enum<T: A> {
 Generic parameters will be automatically bound to the `Clone` trait if necessary. If the `#[educe(Copy)]` attribute exists, they will be bound to the `Copy` trait.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Clone)]
@@ -326,7 +326,7 @@ enum Enum<T, K> {
 Or you can set the where predicates by yourself.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 trait A {
     fn add(&self, rhs: u8) -> Self;
@@ -355,7 +355,7 @@ In the above case, `T` is bound to the `Clone` trait, but `K` is not.
 Or, you can have `educe` replicate the behaviour of `std`'s `derive`'s by using `bound(*)`. See the [`Debug`](#debug) section for more information.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 trait A {
     fn add(&self, rhs: u8) -> Self;
@@ -384,7 +384,7 @@ Use `#[derive(Educe)]` and `#[educe(Copy)]` to implement the `Copy` trait for a 
 ###### Basic Usage
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Copy, Clone)]
@@ -408,7 +408,7 @@ enum Enum {
 All generic parameters will be automatically bound to the `Copy` trait.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Copy, Clone)]
@@ -426,7 +426,7 @@ enum Enum<T, K> {
 Or you can set the where predicates by yourself.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 trait A {
     fn add(&self, rhs: u8) -> Self;
@@ -457,7 +457,7 @@ Note that utilizing custom cloning methods for a type that implements the `Copy`
 The `#[educe(Copy, Clone)]` attribute can be used for a union. The fields of a union cannot be cloned with other methods.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Copy, Clone)]
@@ -473,7 +473,7 @@ Use `#[derive(Educe)]` and `#[educe(PartialEq)]` to implement the `PartialEq` tr
 ###### Basic Usage
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq)]
@@ -497,7 +497,7 @@ enum Enum {
 The `ignore` parameter can ignore a specific field.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq)]
@@ -526,7 +526,7 @@ enum Enum {
 The `method` parameter can be utilized to replace the implementation of the `PartialEq` trait for a field, eliminating the need to implement the `PartialEq` trait for the type of that field.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 fn eq(a: &u8, b: &u8) -> bool {
     a + 1 == *b
@@ -560,7 +560,7 @@ enum Enum<T: A> {
 Generic parameters will be automatically bound to the `PartialEq` trait if necessary.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq)]
@@ -578,7 +578,7 @@ enum Enum<T, K> {
 Or you can set the where predicates by yourself.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 trait A {
     fn is_same(&self, other: &Self) -> bool;
@@ -607,7 +607,7 @@ In the above case, `T` is bound to the `PartialEq` trait, but `K` is not.
 You can have `educe` replicate the behaviour of `std`'s `derive`'s by using `bound(*)`. See the [`Debug`](#debug) section for more information.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq(bound(*)))]
@@ -622,7 +622,7 @@ struct Struct<T> {
 The `#[educe(PartialEq(unsafe))]` attribute can be used for a union. The fields of a union cannot be compared with other methods. The implementation is **unsafe** because it disregards the specific fields it utilizes.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq(unsafe))]
@@ -639,7 +639,7 @@ Use `#[derive(Educe)]` and `#[educe(Eq)]` to implement the `Eq` trait for a stru
 ###### Basic Usage
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq, Eq)]
@@ -663,7 +663,7 @@ enum Enum {
 The `ignore` parameter can ignore a specific field.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq, Eq)]
@@ -692,7 +692,7 @@ enum Enum {
 The `method` parameter can be utilized to replace the implementation of the `Eq` trait for a field, eliminating the need to implement the `PartialEq` trait for the type of that field.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 fn eq(a: &u8, b: &u8) -> bool {
     a + 1 == *b
@@ -726,7 +726,7 @@ enum Enum<T: A> {
 Generic parameters will be automatically bound to the `PartialEq` trait if necessary.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq, Eq)]
@@ -744,7 +744,7 @@ enum Enum<T, K> {
 Or you can set the where predicates by yourself.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 trait A {
     fn is_same(&self, other: &Self) -> bool;
@@ -773,7 +773,7 @@ enum Enum<T, K> {
 The `#[educe(PartialEq(unsafe), Eq)]` attribute can be used for a union. The fields of a union cannot be compared with other methods. The implementation is **unsafe** because it disregards the specific fields it utilizes.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq(unsafe), Eq)]
@@ -790,7 +790,7 @@ Use `#[derive(Educe)]` and `#[educe(PartialOrd)]` to implement the `PartialOrd` 
 ###### Basic Usage
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Educe)]
 #[educe(PartialOrd)]
@@ -814,7 +814,7 @@ enum Enum {
 The `ignore` parameter can ignore a specific field.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Educe)]
 #[educe(PartialOrd)]
@@ -843,7 +843,7 @@ enum Enum {
 The `method` parameter can be utilized to replace the implementation of the `PartialOrd` trait for a field, eliminating the need to implement the `PartialOrd` trait for the type of that field.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 use std::cmp::Ordering;
 
@@ -885,7 +885,7 @@ enum Enum<T: A> {
 Each field can add a `#[educe(PartialOrd(rank = priority_value))]` attribute, where `priority_value` is an integer value indicating its comparison precedence (lower values indicate higher priority). The default `priority_value` for a field depends on its ordinal position (lower towards the front) and starts with `isize::MIN`.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Educe)]
 #[educe(PartialOrd)]
@@ -900,7 +900,7 @@ struct Struct {
 For variants, the discriminant can be explicitly set for comparison.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Educe)]
 #[educe(PartialOrd)]
@@ -917,7 +917,7 @@ enum Enum {
 Generic parameters will be automatically bound to the `PartialOrd` trait if necessary.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Educe)]
 #[educe(PartialOrd)]
@@ -935,7 +935,7 @@ enum Enum<T, K> {
 Or you can set the where predicates by yourself.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 use std::cmp::Ordering;
 
@@ -966,7 +966,7 @@ In the above case, `T` is bound to the `PartialOrd` trait, but `K` is not.
 You can have `educe` replicate the behaviour of `std`'s `derive`'s by using `bound(*)`. See the [`Debug`](#debug) section for more information.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Educe)]
 #[educe(PartialOrd(bound(*)))]
@@ -983,7 +983,7 @@ Use `#[derive(Educe)]` and `#[educe(Ord)]` to implement the `Ord` trait for a st
 ###### Basic Usage
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Eq, Educe)]
 #[educe(PartialOrd, Ord)]
@@ -1007,7 +1007,7 @@ enum Enum {
 The `ignore` parameter can ignore a specific field.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Eq, Educe)]
 #[educe(PartialOrd, Ord)]
@@ -1036,7 +1036,7 @@ enum Enum {
 The `method` parameter can be utilized to replace the implementation of the `Ord` trait for a field, eliminating the need to implement the `Ord` trait for the type of that field.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 use std::cmp::Ordering;
 
@@ -1078,7 +1078,7 @@ enum Enum<T: A> {
 Each field can add a `#[educe(Ord(rank = priority_value))]` attribute, where `priority_value` is an integer value indicating its comparison precedence (lower values indicate higher priority). The default `priority_value` for a field depends on its ordinal position (lower towards the front) and starts with `isize::MIN`.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Eq, Educe)]
 #[educe(PartialOrd, Ord)]
@@ -1093,7 +1093,7 @@ struct Struct {
 For variants, the discriminant can be explicitly set for comparison.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Eq, Educe)]
 #[educe(PartialOrd, Ord)]
@@ -1110,7 +1110,7 @@ enum Enum {
 Generic parameters will be automatically bound to the `Ord` trait if necessary.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(PartialEq, Eq, Educe)]
 #[educe(PartialOrd, Ord)]
@@ -1128,7 +1128,7 @@ enum Enum<T, K> {
 Or you can set the where predicates by yourself.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 use std::cmp::Ordering;
 
@@ -1161,7 +1161,7 @@ Use `#[derive(Educe)]` and `#[educe(Hash)]` to implement the `Hash` trait for a 
 ###### Basic Usage
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Hash)]
@@ -1185,7 +1185,7 @@ enum Enum {
 The `ignore` parameter can ignore a specific field.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Hash)]
@@ -1214,7 +1214,7 @@ enum Enum {
 The `method` parameter can be utilized to replace the implementation of the `Hash` trait for a field, eliminating the need to implement the `Hash` trait for the type of that field.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 use std::hash::{Hash, Hasher};
 
@@ -1246,7 +1246,7 @@ enum Enum<T> {
 Generic parameters will be automatically bound to the `Hash` trait if necessary.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Hash)]
@@ -1264,7 +1264,7 @@ enum Enum<T, K> {
 Or you can set the where predicates by yourself.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 use std::hash::{Hash, Hasher};
 
@@ -1295,7 +1295,7 @@ In the above case, `T` is bound to the `Hash` trait, but `K` is not.
 You can have `educe` replicate the behaviour of `std`'s `derive`'s by using `bound(*)`. See the [`Debug`](#debug) section for more information.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Hash(bound(*)))]
@@ -1310,7 +1310,7 @@ struct Struct<T> {
 The `#[educe(PartialEq(unsafe), Eq, Hash(unsafe))]` attribute can be used for a union. The fields of a union cannot be hashed with other methods. The implementation is **unsafe** because it disregards the specific fields it utilizes.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(PartialEq(unsafe), Eq, Hash(unsafe))]
@@ -1329,7 +1329,7 @@ Use `#[derive(Educe)]` and `#[educe(Default)]` to implement the `Default` trait 
 For enums and unions, it is necessary to designate a default variant (for enums) and a default field (for unions) unless the enum has only one variant or the union has only one field.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Default)]
@@ -1360,7 +1360,7 @@ union Union {
 ###### The Default Value for the Entire Type
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Default(expression = Struct { f1: 1 }))]
@@ -1391,7 +1391,7 @@ You may need to activate the `full` feature to enable support for advanced expre
 ###### The Default Values for Specific Fields
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Default)]
@@ -1453,7 +1453,7 @@ union Union {
 Generic parameters will be automatically bound to the `Default` trait if necessary.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Default)]
@@ -1470,7 +1470,7 @@ enum Enum<T> {
 Or you can set the where predicates by yourself.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Default(bound(T: std::default::Default)))]
@@ -1489,7 +1489,7 @@ enum Enum<T> {
 With the `#[educe(Default(new))]` attribute, your type will include an additional associated function called `new`. This function can be utilized to invoke the `default` method of the `Default` trait.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Default(new))]
@@ -1507,7 +1507,7 @@ Use `#[derive(Educe)]` and `#[educe(Deref)]` to implement the `Deref` trait for 
 You must designate a field as the default for obtaining an immutable reference unless the number of fields is exactly one.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Deref)]
@@ -1546,7 +1546,7 @@ Use `#[derive(Educe)]` and `#[educe(DerefMut)]` to implement the `DerefMut` trai
 You must designate a field as the default for obtaining an mutable reference unless the number of fields is exactly one.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Deref, DerefMut)]
@@ -1588,7 +1588,7 @@ Use `#[derive(Educe)]` and `#[educe(Into(type))]` to implement the `Into<type>` 
 You need to designate a field as the default for `Into<type>` conversion unless the number of fields is exactly one. If you don't, educe will automatically try to find a proper one.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Into(u8), Into(u16))]
@@ -1616,7 +1616,7 @@ enum Enum {
 The `method` parameter can be utilized to replace the implementation of the `Into` trait for a field, eliminating the need to implement the `Into` trait for the type of that field.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 fn into(v: u16) -> u8 {
     v as u8
@@ -1640,7 +1640,7 @@ enum Enum {
 Generic parameters will be automatically bound to the `Into<type>` trait if necessary.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Into(u8))]
@@ -1657,7 +1657,7 @@ enum Enum<T, K> {
 Or you can set the where predicates by yourself.
 
 ```rust
-use educe::Educe;
+use databend_educe::Educe;
 
 fn into<T>(_v: T) -> u8 {
     0

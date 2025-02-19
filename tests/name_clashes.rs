@@ -3,7 +3,7 @@
 #![cfg(feature = "default")]
 #![allow(dead_code)]
 
-use educe::Educe;
+use databend_educe::Educe;
 
 #[derive(Educe)]
 #[educe(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, Hash)]

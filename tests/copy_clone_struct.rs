@@ -4,7 +4,7 @@
 
 use core::marker::PhantomData;
 
-use educe::Educe;
+use databend_educe::Educe;
 
 #[test]
 fn empty() {

@@ -1,7 +1,7 @@
 #![cfg(all(feature = "Deref", feature = "DerefMut"))]
 #![no_std]
 
-use educe::Educe;
+use databend_educe::Educe;
 
 #[allow(dead_code)]
 #[test]

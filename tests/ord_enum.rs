@@ -3,7 +3,7 @@
 
 use core::cmp::Ordering;
 
-use educe::Educe;
+use databend_educe::Educe;
 
 #[test]
 fn empty() {
@@ -35,28 +35,11 @@ fn basic_1() {
 
     assert!(Enum::Unit == Enum::Unit);
     assert!(Enum::Unit < Enum::Unit2);
-    assert!(
-        Enum::Unit2
-            < Enum::Struct {
-                f1: 0
-            }
-    );
+    assert!(Enum::Unit2 < Enum::Struct { f1: 0 });
 
-    assert!(
-        Enum::Struct {
-            f1: 2
-        } > Enum::Struct {
-            f1: 1
-        }
-    );
+    assert!(Enum::Struct { f1: 2 } > Enum::Struct { f1: 1 });
 
-    assert!(
-        Enum::Struct {
-            f1: 1
-        } < Enum::Struct {
-            f1: 2
-        }
-    );
+    assert!(Enum::Struct { f1: 1 } < Enum::Struct { f1: 2 });
 
     assert!(Enum::Tuple(2) > Enum::Tuple(1));
     assert!(Enum::Tuple(1) < Enum::Tuple(2));
@@ -71,21 +54,9 @@ fn basic_2() {
         Tuple(u8, u8),
     }
 
-    assert!(
-        Enum::Struct {
-            f1: 2, f2: 1
-        } > Enum::Struct {
-            f1: 1, f2: 2
-        }
-    );
+    assert!(Enum::Struct { f1: 2, f2: 1 } > Enum::Struct { f1: 1, f2: 2 });
 
-    assert!(
-        Enum::Struct {
-            f1: 1, f2: 2
-        } < Enum::Struct {
-            f1: 2, f2: 1
-        }
-    );
+    assert!(Enum::Struct { f1: 1, f2: 2 } < Enum::Struct { f1: 2, f2: 1 });
 
     assert!(Enum::Tuple(2, 1) > Enum::Tuple(1, 2));
     assert!(Enum::Tuple(1, 2) < Enum::Tuple(2, 1));
@@ -110,45 +81,24 @@ fn basic_4() {
     #[educe(PartialOrd, Ord)]
     #[repr(u8)]
     enum Enum {
-        Unit   = 4,
-        Unit2  = 3,
+        Unit = 4,
+        Unit2 = 3,
         Struct { f1: u8 } = 2,
         Tuple(u8) = 1,
     }
 
     assert!(Enum::Unit == Enum::Unit);
     assert!(Enum::Unit > Enum::Unit2);
-    assert!(
-        Enum::Unit2
-            > Enum::Struct {
-                f1: 9
-            }
-    );
+    assert!(Enum::Unit2 > Enum::Struct { f1: 9 });
 
-    assert!(
-        Enum::Struct {
-            f1: 2
-        } > Enum::Struct {
-            f1: 1
-        }
-    );
+    assert!(Enum::Struct { f1: 2 } > Enum::Struct { f1: 1 });
 
-    assert!(
-        Enum::Struct {
-            f1: 1
-        } < Enum::Struct {
-            f1: 2
-        }
-    );
+    assert!(Enum::Struct { f1: 1 } < Enum::Struct { f1: 2 });
 
     assert!(Enum::Tuple(2) > Enum::Tuple(1));
     assert!(Enum::Tuple(1) < Enum::Tuple(2));
 
-    assert!(
-        Enum::Struct {
-            f1: 1
-        } > Enum::Tuple(2)
-    );
+    assert!(Enum::Struct { f1: 1 } > Enum::Tuple(2));
 }
 
 #[test]
@@ -166,33 +116,12 @@ fn ignore_1() {
 
     assert_eq!(
         Ordering::Greater,
-        Enum::Struct {
-            f1: 1, f2: 3
-        }
-        .cmp(&Enum::Struct {
-            f1: 1, f2: 2
-        })
+        Enum::Struct { f1: 1, f2: 3 }.cmp(&Enum::Struct { f1: 1, f2: 2 })
     );
 
-    assert_eq!(
-        Ordering::Less,
-        Enum::Struct {
-            f1: 1, f2: 2
-        }
-        .cmp(&Enum::Struct {
-            f1: 1, f2: 3
-        })
-    );
+    assert_eq!(Ordering::Less, Enum::Struct { f1: 1, f2: 2 }.cmp(&Enum::Struct { f1: 1, f2: 3 }));
 
-    assert_eq!(
-        Ordering::Equal,
-        Enum::Struct {
-            f1: 2, f2: 2
-        }
-        .cmp(&Enum::Struct {
-            f1: 1, f2: 2
-        })
-    );
+    assert_eq!(Ordering::Equal, Enum::Struct { f1: 2, f2: 2 }.cmp(&Enum::Struct { f1: 1, f2: 2 }));
 
     assert_eq!(Ordering::Greater, Enum::Tuple(1, 3).cmp(&Enum::Tuple(1, 2)));
     assert_eq!(Ordering::Less, Enum::Tuple(1, 2).cmp(&Enum::Tuple(1, 3)));
@@ -214,33 +143,12 @@ fn ignore_2() {
 
     assert_eq!(
         Ordering::Greater,
-        Enum::Struct {
-            f1: 1, f2: 3
-        }
-        .cmp(&Enum::Struct {
-            f1: 1, f2: 2
-        })
+        Enum::Struct { f1: 1, f2: 3 }.cmp(&Enum::Struct { f1: 1, f2: 2 })
     );
 
-    assert_eq!(
-        Ordering::Less,
-        Enum::Struct {
-            f1: 1, f2: 2
-        }
-        .cmp(&Enum::Struct {
-            f1: 1, f2: 3
-        })
-    );
+    assert_eq!(Ordering::Less, Enum::Struct { f1: 1, f2: 2 }.cmp(&Enum::Struct { f1: 1, f2: 3 }));
 
-    assert_eq!(
-        Ordering::Equal,
-        Enum::Struct {
-            f1: 2, f2: 2
-        }
-        .cmp(&Enum::Struct {
-            f1: 1, f2: 2
-        })
-    );
+    assert_eq!(Ordering::Equal, Enum::Struct { f1: 2, f2: 2 }.cmp(&Enum::Struct { f1: 1, f2: 2 }));
 
     assert_eq!(Ordering::Greater, Enum::Tuple(1, 3).cmp(&Enum::Tuple(1, 2)));
     assert_eq!(Ordering::Less, Enum::Tuple(1, 2).cmp(&Enum::Tuple(1, 3)));
@@ -265,35 +173,11 @@ fn method_1() {
     #[educe(PartialOrd, Ord)]
     struct Tuple(u8, #[educe(Ord(method = cmp))] u8);
 
-    assert_eq!(
-        Ordering::Less,
-        Struct {
-            f1: 1, f2: 3
-        }
-        .cmp(&Struct {
-            f1: 1, f2: 2
-        })
-    );
+    assert_eq!(Ordering::Less, Struct { f1: 1, f2: 3 }.cmp(&Struct { f1: 1, f2: 2 }));
 
-    assert_eq!(
-        Ordering::Greater,
-        Struct {
-            f1: 1, f2: 2
-        }
-        .cmp(&Struct {
-            f1: 1, f2: 3
-        })
-    );
+    assert_eq!(Ordering::Greater, Struct { f1: 1, f2: 2 }.cmp(&Struct { f1: 1, f2: 3 }));
 
-    assert_eq!(
-        Ordering::Equal,
-        Struct {
-            f1: 1, f2: 2
-        }
-        .cmp(&Struct {
-            f1: 1, f2: 2
-        })
-    );
+    assert_eq!(Ordering::Equal, Struct { f1: 1, f2: 2 }.cmp(&Struct { f1: 1, f2: 2 }));
 
     assert_eq!(Ordering::Less, Tuple(1, 3).cmp(&Tuple(1, 2)));
     assert_eq!(Ordering::Greater, Tuple(1, 2).cmp(&Tuple(1, 3)));
@@ -318,35 +202,11 @@ fn method_2() {
     #[educe(PartialOrd, Ord)]
     struct Tuple(u8, #[educe(Ord(method(cmp)))] u8);
 
-    assert_eq!(
-        Ordering::Less,
-        Struct {
-            f1: 1, f2: 3
-        }
-        .cmp(&Struct {
-            f1: 1, f2: 2
-        })
-    );
+    assert_eq!(Ordering::Less, Struct { f1: 1, f2: 3 }.cmp(&Struct { f1: 1, f2: 2 }));
 
-    assert_eq!(
-        Ordering::Greater,
-        Struct {
-            f1: 1, f2: 2
-        }
-        .cmp(&Struct {
-            f1: 1, f2: 3
-        })
-    );
+    assert_eq!(Ordering::Greater, Struct { f1: 1, f2: 2 }.cmp(&Struct { f1: 1, f2: 3 }));
 
-    assert_eq!(
-        Ordering::Equal,
-        Struct {
-            f1: 1, f2: 2
-        }
-        .cmp(&Struct {
-            f1: 1, f2: 2
-        })
-    );
+    assert_eq!(Ordering::Equal, Struct { f1: 1, f2: 2 }.cmp(&Struct { f1: 1, f2: 2 }));
 
     assert_eq!(Ordering::Less, Tuple(1, 3).cmp(&Tuple(1, 2)));
     assert_eq!(Ordering::Greater, Tuple(1, 2).cmp(&Tuple(1, 3)));
@@ -366,21 +226,9 @@ fn rank_1() {
         Tuple(#[educe(Ord(rank = 1))] u8, u8),
     }
 
-    assert!(
-        Enum::Struct {
-            f1: 2, f2: 1
-        } < Enum::Struct {
-            f1: 1, f2: 2
-        }
-    );
+    assert!(Enum::Struct { f1: 2, f2: 1 } < Enum::Struct { f1: 1, f2: 2 });
 
-    assert!(
-        Enum::Struct {
-            f1: 1, f2: 2
-        } > Enum::Struct {
-            f1: 2, f2: 1
-        }
-    );
+    assert!(Enum::Struct { f1: 1, f2: 2 } > Enum::Struct { f1: 2, f2: 1 });
 
     assert!(Enum::Tuple(2, 1) < Enum::Tuple(1, 2));
     assert!(Enum::Tuple(1, 2) > Enum::Tuple(2, 1));
@@ -399,21 +247,9 @@ fn rank_2() {
         Tuple(#[educe(Ord(rank(1)))] u8, u8),
     }
 
-    assert!(
-        Enum::Struct {
-            f1: 2, f2: 1
-        } < Enum::Struct {
-            f1: 1, f2: 2
-        }
-    );
+    assert!(Enum::Struct { f1: 2, f2: 1 } < Enum::Struct { f1: 1, f2: 2 });
 
-    assert!(
-        Enum::Struct {
-            f1: 1, f2: 2
-        } > Enum::Struct {
-            f1: 2, f2: 1
-        }
-    );
+    assert!(Enum::Struct { f1: 1, f2: 2 } > Enum::Struct { f1: 2, f2: 1 });
 
     assert!(Enum::Tuple(2, 1) < Enum::Tuple(1, 2));
     assert!(Enum::Tuple(1, 2) > Enum::Tuple(2, 1));
@@ -433,21 +269,9 @@ fn rank_3() {
         Tuple(#[educe(Ord(rank = 1))] u8, #[educe(Ord(rank = 0))] u8),
     }
 
-    assert!(
-        Enum::Struct {
-            f1: 2, f2: 1
-        } < Enum::Struct {
-            f1: 1, f2: 2
-        }
-    );
+    assert!(Enum::Struct { f1: 2, f2: 1 } < Enum::Struct { f1: 1, f2: 2 });
 
-    assert!(
-        Enum::Struct {
-            f1: 1, f2: 2
-        } > Enum::Struct {
-            f1: 2, f2: 1
-        }
-    );
+    assert!(Enum::Struct { f1: 1, f2: 2 } > Enum::Struct { f1: 2, f2: 1 });
 
     assert!(Enum::Tuple(2, 1) < Enum::Tuple(1, 2));
     assert!(Enum::Tuple(1, 2) > Enum::Tuple(2, 1));
@@ -467,21 +291,9 @@ fn rank_4() {
         Tuple(#[educe(Ord(rank(1)))] u8, #[educe(Ord(rank(0)))] u8),
     }
 
-    assert!(
-        Enum::Struct {
-            f1: 2, f2: 1
-        } < Enum::Struct {
-            f1: 1, f2: 2
-        }
-    );
+    assert!(Enum::Struct { f1: 2, f2: 1 } < Enum::Struct { f1: 1, f2: 2 });
 
-    assert!(
-        Enum::Struct {
-            f1: 1, f2: 2
-        } > Enum::Struct {
-            f1: 2, f2: 1
-        }
-    );
+    assert!(Enum::Struct { f1: 1, f2: 2 } > Enum::Struct { f1: 2, f2: 1 });
 
     assert!(Enum::Tuple(2, 1) < Enum::Tuple(1, 2));
     assert!(Enum::Tuple(1, 2) > Enum::Tuple(2, 1));
@@ -499,21 +311,9 @@ fn bound_1() {
     #[educe(PartialOrd, Ord)]
     struct Tuple<T>(T);
 
-    assert!(
-        Struct {
-            f1: 2
-        } > Struct {
-            f1: 1
-        }
-    );
+    assert!(Struct { f1: 2 } > Struct { f1: 1 });
 
-    assert!(
-        Struct {
-            f1: 1
-        } < Struct {
-            f1: 2
-        }
-    );
+    assert!(Struct { f1: 1 } < Struct { f1: 2 });
 
     assert!(Tuple(2) > Tuple(1));
     assert!(Tuple(1) < Tuple(2));
@@ -531,21 +331,9 @@ fn bound_2() {
     #[educe(PartialOrd, Ord(bound = "T: core::cmp::Ord"))]
     struct Tuple<T>(T);
 
-    assert!(
-        Struct {
-            f1: 2
-        } > Struct {
-            f1: 1
-        }
-    );
+    assert!(Struct { f1: 2 } > Struct { f1: 1 });
 
-    assert!(
-        Struct {
-            f1: 1
-        } < Struct {
-            f1: 2
-        }
-    );
+    assert!(Struct { f1: 1 } < Struct { f1: 2 });
 
     assert!(Tuple(2) > Tuple(1));
     assert!(Tuple(1) < Tuple(2));
@@ -563,21 +351,9 @@ fn bound_3() {
     #[educe(PartialOrd, Ord(bound(T: core::cmp::Ord)))]
     struct Tuple<T>(T);
 
-    assert!(
-        Struct {
-            f1: 2
-        } > Struct {
-            f1: 1
-        }
-    );
+    assert!(Struct { f1: 2 } > Struct { f1: 1 });
 
-    assert!(
-        Struct {
-            f1: 1
-        } < Struct {
-            f1: 2
-        }
-    );
+    assert!(Struct { f1: 1 } < Struct { f1: 2 });
 
     assert!(Tuple(2) > Tuple(1));
     assert!(Tuple(1) < Tuple(2));
@@ -598,33 +374,12 @@ fn use_partial_ord_attr_ignore() {
 
     assert_eq!(
         Ordering::Greater,
-        Enum::Struct {
-            f1: 1, f2: 3
-        }
-        .cmp(&Enum::Struct {
-            f1: 1, f2: 2
-        })
+        Enum::Struct { f1: 1, f2: 3 }.cmp(&Enum::Struct { f1: 1, f2: 2 })
     );
 
-    assert_eq!(
-        Ordering::Less,
-        Enum::Struct {
-            f1: 1, f2: 2
-        }
-        .cmp(&Enum::Struct {
-            f1: 1, f2: 3
-        })
-    );
+    assert_eq!(Ordering::Less, Enum::Struct { f1: 1, f2: 2 }.cmp(&Enum::Struct { f1: 1, f2: 3 }));
 
-    assert_eq!(
-        Ordering::Equal,
-        Enum::Struct {
-            f1: 2, f2: 2
-        }
-        .cmp(&Enum::Struct {
-            f1: 1, f2: 2
-        })
-    );
+    assert_eq!(Ordering::Equal, Enum::Struct { f1: 2, f2: 2 }.cmp(&Enum::Struct { f1: 1, f2: 2 }));
 
     assert_eq!(Ordering::Greater, Enum::Tuple(1, 3).cmp(&Enum::Tuple(1, 2)));
     assert_eq!(Ordering::Less, Enum::Tuple(1, 2).cmp(&Enum::Tuple(1, 3)));

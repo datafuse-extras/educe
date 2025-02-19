@@ -3,7 +3,7 @@
 #![allow(clippy::default_constructed_unit_structs)]
 
 use assert_eq_float::assert_eq_float;
-use educe::Educe;
+use databend_educe::Educe;
 
 #[allow(dead_code)]
 #[test]

@@ -7,7 +7,7 @@ extern crate alloc;
 use alloc::string::String;
 
 use assert_eq_float::assert_eq_float;
-use educe::Educe;
+use databend_educe::Educe;
 
 #[test]
 fn empty() {

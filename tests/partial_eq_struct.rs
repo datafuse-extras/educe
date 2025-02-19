@@ -1,7 +1,7 @@
 #![cfg(feature = "PartialEq")]
 #![no_std]
 
-use educe::Educe;
+use databend_educe::Educe;
 
 #[test]
 fn empty() {

@@ -3,7 +3,7 @@
 
 use core::cmp::Ordering;
 
-use educe::Educe;
+use databend_educe::Educe;
 
 #[test]
 fn empty() {

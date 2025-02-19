@@ -4,7 +4,7 @@
 #[macro_use]
 extern crate alloc;
 
-use educe::Educe;
+use databend_educe::Educe;
 
 #[test]
 fn empty() {
