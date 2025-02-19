@@ -1,5 +1,5 @@
 [package]
-name = "educe"
+name = "databend_educe"
 version = "0.6.0"
 authors = ["Magic Len <len@magiclen.org>"]
 edition = "2021"
@@ -8,7 +8,7 @@ repository = "https://github.com/magiclen/educe"
 homepage = "https://magiclen.org/educe"
 keywords = ["derive", "macro", "trait", "field", "procedural"]
 categories = ["no-std", "rust-patterns"]
-description = "This crate offers procedural macros designed to facilitate the swift implementation of Rust's built-in traits."
+description = "This crate offers procedural macros designed to facilitate the swift implementation of Rust's built-in traits, temporarily used in databend"
 license = "MIT"
 include = ["src/**/*", "Cargo.toml", "README.md", "LICENSE"]
 
