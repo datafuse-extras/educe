@@ -125,11 +125,13 @@ impl TraitHandler for DefaultUnionHandler {
             where_clause.predicates.push(where_predicate);
         }
 
+        let method_attrs = type_attribute.attrs;
         let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
 
         token_stream.extend(quote! {
             impl #impl_generics ::core::default::Default for #ident #ty_generics #where_clause {
                 #[inline]
+                #(#method_attrs)*
                 fn default() -> Self {
                     #default_token_stream
                 }

@@ -93,11 +93,13 @@ impl TraitHandler for OrdStructHandler {
             where_clause.predicates.push(where_predicate);
         }
 
+        let method_attrs = type_attribute.attrs;
         let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
 
         token_stream.extend(quote! {
             impl #impl_generics ::core::cmp::Ord for #ident #ty_generics #where_clause {
                 #[inline]
+                #(#method_attrs)*
                 fn cmp(&self, other: &Self) -> ::core::cmp::Ordering {
                     #cmp_token_stream
 

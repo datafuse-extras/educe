@@ -95,11 +95,13 @@ impl TraitHandler for PartialOrdStructHandler {
             where_clause.predicates.push(where_predicate);
         }
 
+        let method_attrs = type_attribute.attrs;
         let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
 
         token_stream.extend(quote! {
             impl #impl_generics ::core::cmp::PartialOrd for #ident #ty_generics #where_clause {
                 #[inline]
+                #(#method_attrs)*
                 fn partial_cmp(&self, other: &Self) -> Option<::core::cmp::Ordering> {
                     #partial_cmp_token_stream
 

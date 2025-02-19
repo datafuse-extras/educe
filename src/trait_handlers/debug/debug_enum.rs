@@ -346,11 +346,13 @@ impl TraitHandler for DebugEnumHandler {
             where_clause.predicates.push(where_predicate);
         }
 
+        let method_attrs = type_attribute.attrs;
         let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
 
         token_stream.extend(quote! {
             impl #impl_generics ::core::fmt::Debug for #ident #ty_generics #where_clause {
                 #[inline]
+                #(#method_attrs)*
                 fn fmt(&self, f: &mut ::core::fmt::Formatter) -> ::core::fmt::Result {
                     #builder_token_stream
                 }

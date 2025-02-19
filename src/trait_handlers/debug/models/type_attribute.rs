@@ -9,6 +9,7 @@ use crate::{
     },
     panic, Trait,
 };
+use crate::common::expr::{meta_2_attrs, meta_name_value_2_attrs};
 
 #[derive(Debug, Clone)]
 pub(crate) enum TypeName {
@@ -33,6 +34,7 @@ pub(crate) struct TypeAttribute {
     pub(crate) name:        TypeName,
     pub(crate) named_field: bool,
     pub(crate) bound:       Bound,
+    pub(crate) attrs:       Vec<Attribute>,
 }
 
 #[derive(Debug)]
@@ -54,6 +56,7 @@ impl TypeAttributeBuilder {
         let mut name = self.name.clone();
         let mut named_field = self.named_field;
         let mut bound = Bound::Auto;
+        let mut attrs = vec![];
 
         let correct_usage_for_debug_attribute = {
             let mut usage = vec![];
@@ -189,6 +192,10 @@ impl TypeAttributeBuilder {
 
                                 return Ok(true);
                             },
+                            "attrs" => {
+                                attrs = meta_2_attrs(&meta)?;
+                                return Ok(true);
+                            }
                             _ => (),
                         }
                     }
@@ -212,6 +219,7 @@ impl TypeAttributeBuilder {
             name,
             named_field,
             bound,
+            attrs,
         })
     }
 
@@ -259,6 +267,7 @@ impl TypeAttributeBuilder {
             name:        self.name.clone(),
             named_field: self.named_field,
             bound:       Bound::Auto,
+            attrs:       vec![],
         }))
     }
 }

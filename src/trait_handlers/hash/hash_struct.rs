@@ -72,11 +72,13 @@ impl TraitHandler for HashStructHandler {
             where_clause.predicates.push(where_predicate);
         }
 
+        let method_attrs = type_attribute.attrs;
         let (impl_generics, ty_generics, where_clause) = generics.split_for_impl();
 
         token_stream.extend(quote! {
             impl #impl_generics ::core::hash::Hash for #ident #ty_generics #where_clause {
                 #[inline]
+                #(#method_attrs)*
                 fn hash<H: ::core::hash::Hasher>(&self, state: &mut H) {
                     #hash_token_stream
                 }

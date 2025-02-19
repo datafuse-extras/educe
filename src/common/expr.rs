@@ -1,6 +1,9 @@
 use quote::{quote, ToTokens};
-use syn::{spanned::Spanned, Expr, Lit, Meta, Type};
-
+use syn::{parse_macro_input, parse_quote, spanned::Spanned, Attribute, Expr, Lit, LitBool, LitStr, Meta, MetaNameValue, Token, Type, WherePredicate};
+use syn::parse::{ParseStream, Parser};
+use syn::punctuated::Punctuated;
+use crate::common::ident_bool::meta_name_value_2_bool;
+use crate::common::where_predicates_bool::WherePredicates;
 use super::path::path_to_string;
 
 const INT_TYPES: [&str; 12] =
@@ -20,6 +23,58 @@ pub(crate) fn meta_2_expr(meta: &Meta) -> syn::Result<Expr> {
     }
 }
 
+
+
+#[inline]
+pub(crate) fn meta_name_value_2_attrs(name_value: &MetaNameValue) -> syn::Result<Vec<Attribute>> {
+    if let Expr::Lit(lit) = &name_value.value {
+        if let Lit::Str(b) = &lit.lit {
+            return b.parse_with(|input: ParseStream<'_>| {
+                let mut attrs = vec![];
+
+                while !input.is_empty() {
+                    attrs.extend(input.call(Attribute::parse_outer)?);
+                    if !input.is_empty() {
+                        let _: Token![,] = input.parse()?;
+                    }
+                }
+
+                Ok(attrs)
+            });
+        }
+    }
+
+    Err(syn::Error::new(
+        name_value.value.span(),
+        format!("expected `{path} = false`", path = path_to_string(&name_value.path)),
+    ))
+}
+
+#[inline]
+pub(crate) fn meta_2_attrs(meta: &Meta) -> syn::Result<Vec<Attribute>> {
+    match &meta {
+        Meta::NameValue(name_value) => meta_name_value_2_attrs(name_value),
+        Meta::List(list) => {
+            list.parse_args_with(|input: ParseStream<'_>| {
+                let mut attrs = vec![];
+
+                while !input.is_empty() {
+                    attrs.extend(input.call(Attribute::parse_outer)?);
+                    if !input.is_empty() {
+                        let _: Token![,] = input.parse()?;
+                    }
+                }
+
+                Ok(attrs)
+            })
+        }
+        Meta::Path(path) => Err(syn::Error::new(
+            path.span(),
+            format!("expected `{path} = false` or `{path}(false)`", path = path_to_string(path)),
+        )),
+    }
+}
+
 #[inline]
 pub(crate) fn auto_adjust_expr(expr: Expr, ty: Option<&Type>) -> Expr {
     match &expr {
@@ -34,7 +89,7 @@ pub(crate) fn auto_adjust_expr(expr: Expr, ty: Option<&Type>) -> Expr {
                             return expr;
                         }
                     }
-                },
+                }
                 Lit::Float(lit) => {
                     if let Some(Type::Path(ty)) = ty {
                         let ty_string = ty.into_token_stream().to_string();
@@ -44,7 +99,7 @@ pub(crate) fn auto_adjust_expr(expr: Expr, ty: Option<&Type>) -> Expr {
                             return expr;
                         }
                     }
-                },
+                }
                 Lit::Str(_) => {
                     if let Some(Type::Reference(ty)) = ty {
                         let ty_string = ty.elem.clone().into_token_stream().to_string();
@@ -54,7 +109,7 @@ pub(crate) fn auto_adjust_expr(expr: Expr, ty: Option<&Type>) -> Expr {
                             return expr;
                         }
                     }
-                },
+                }
                 Lit::Bool(_) => {
                     if let Some(Type::Path(ty)) = ty {
                         let ty_string = ty.into_token_stream().to_string();
@@ -64,7 +119,7 @@ pub(crate) fn auto_adjust_expr(expr: Expr, ty: Option<&Type>) -> Expr {
                             return expr;
                         }
                     }
-                },
+                }
                 Lit::Char(_) => {
                     if let Some(Type::Path(ty)) = ty {
                         let ty_string = ty.into_token_stream().to_string();
@@ -74,7 +129,7 @@ pub(crate) fn auto_adjust_expr(expr: Expr, ty: Option<&Type>) -> Expr {
                             return expr;
                         }
                     }
-                },
+                }
                 Lit::Byte(_) => {
                     if let Some(Type::Path(ty)) = ty {
                         let ty_string = ty.into_token_stream().to_string();
@@ -84,7 +139,7 @@ pub(crate) fn auto_adjust_expr(expr: Expr, ty: Option<&Type>) -> Expr {
                             return expr;
                         }
                     }
-                },
+                }
                 Lit::ByteStr(_) => {
                     if let Some(Type::Reference(ty)) = ty {
                         if let Type::Array(ty) = ty.elem.as_ref() {
@@ -98,12 +153,12 @@ pub(crate) fn auto_adjust_expr(expr: Expr, ty: Option<&Type>) -> Expr {
                             }
                         }
                     }
-                },
+                }
                 _ => (),
             }
 
             syn::parse2(quote!(::core::convert::Into::into(#expr))).unwrap()
-        },
+        }
         _ => expr,
     }
 }

@@ -1,9 +1,11 @@
 use syn::{punctuated::Punctuated, Attribute, Meta, Token};
 
 use crate::{common::bound::Bound, panic, Trait};
+use crate::common::expr::meta_2_attrs;
 
 pub(crate) struct TypeAttribute {
     pub(crate) bound: Bound,
+    pub(crate) attrs: Vec<Attribute>,
 }
 
 #[derive(Debug)]
@@ -17,6 +19,7 @@ impl TypeAttributeBuilder {
         debug_assert!(meta.path().is_ident("PartialOrd"));
 
         let mut bound = Bound::Auto;
+        let mut attrs = vec![];
 
         let correct_usage_for_partial_eq_attribute = {
             let mut usage = vec![];
@@ -72,6 +75,9 @@ impl TypeAttributeBuilder {
                             bound = v;
 
                             return Ok(true);
+                        } else if ident == "attrs" {
+                            attrs = meta_2_attrs(&meta)?;
+                            return Ok(true);
                         }
                     }
 
@@ -91,6 +97,7 @@ impl TypeAttributeBuilder {
 
         Ok(TypeAttribute {
             bound,
+            attrs,
         })
     }
 
@@ -134,7 +141,7 @@ impl TypeAttributeBuilder {
         }
 
         Ok(output.unwrap_or(TypeAttribute {
-            bound: Bound::Auto
+            bound: Bound::Auto, attrs: vec![],
         }))
     }
 }
